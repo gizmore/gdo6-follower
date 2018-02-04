@@ -47,15 +47,17 @@ final class Follow extends MethodForm
 	
 	public function validateFollowing(GDT_Form $form, GDT_User $field, $value)
 	{
-		$user = $field->getValue();
-		if ($user === GDO_User::current())
+		if ($user = $field->getValue())
 		{
-			return $field->error('err_follow_self');
-		}
-		$uid = GDO_User::current()->getID();
-		if ('1' === GDO_Follower::table()->select('1')->where("follow_user=$uid AND follow_following={$field->getVar()}")->exec()->fetchValue())
-		{
-			return $field->error('err_follow_already', [$user->displayNameLabel()]);
+			if ($user === GDO_User::current())
+			{
+				return $field->error('err_follow_self');
+			}
+			$uid = GDO_User::current()->getID();
+			if ('1' === GDO_Follower::table()->select('1')->where("follow_user=$uid AND follow_following={$user->getID()}")->exec()->fetchValue())
+			{
+				return $field->error('err_follow_already', [$user->displayNameLabel()]);
+			}
 		}
 		return true;
 	}
