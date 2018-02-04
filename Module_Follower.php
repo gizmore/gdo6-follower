@@ -1,7 +1,6 @@
 <?php
 namespace GDO\Follower;
 use GDO\Core\GDO_Module;
-use GDO\DB\GDT_Checkbox;
 use GDO\UI\GDT_Bar;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;

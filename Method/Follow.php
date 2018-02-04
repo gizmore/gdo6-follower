@@ -9,9 +9,11 @@ use GDO\Form\GDT_AntiCSRF;
 use GDO\UI\GDT_Bar;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
+use GDO\User\GDT_User;
 use GDO\Core\GDT_Hook;
 use GDO\Core\Website;
 use GDO\Core\GDT_Response;
+use GDO\Form\GDT_Validator;
 
 /**
  * Add a user to follow.
@@ -37,9 +39,24 @@ final class Follow extends MethodForm
 		$follow = GDO_Follower::table();
 		$form->addFields(array(
 			$follow->gdoColumn('follow_following'),
+			GDT_Validator::make()->validator('follow_following', [$this, 'validateFollowing']),
 			GDT_Submit::make(),
 			GDT_AntiCSRF::make(),
 		));
+	}
+	
+	public function validateFollowing(GDT_Form $form, GDT_User $field, $value)
+	{
+		$user = $field->getValue();
+		if ($user === GDO_User::current())
+		{
+			return $field->error('err_follow_self');
+		}
+		if ('1' === GDO_Follower::table()->select('1')->where("follow_user=$uid AND follow_following={$field->getVar()}")->exec()->fetchValue())
+		{
+			return $field->error('err_follow_already');
+		}
+		return true;
 	}
 	
 	public function formValidated(GDT_Form $form)
