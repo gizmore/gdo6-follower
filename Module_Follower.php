@@ -24,6 +24,8 @@ final class Module_Follower extends GDO_Module
 			'GDO\Follower\GDO_Follower',
 		);
 	}
+	
+	public function onLoadLanguage() { return $this->loadLanguage('lang/follower'); }
 
 	#############
 	### Hooks ###
