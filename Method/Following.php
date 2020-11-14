@@ -27,7 +27,7 @@ final class Following extends MethodQueryList
 		);
 	}
 	
-	public function gdoQuery()
+	public function getQuery()
 	{
 		$uid = $this->gdoParameter('id')->getParameterValue()->getID();
 		return GDO_Follower::table()->select('*')->where("follow_user=$uid");
