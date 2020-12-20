@@ -52,9 +52,9 @@ final class Unfollow extends MethodForm
 		$uid = GDO_User::current()->getID();
 		$following = $form->getFormValue('follower');
 		
-		GDO_Follower::table()->deleteWhere("follow_user=$uid AND follow_following={$following->getID()}")->exec();
+		GDO_Follower::table()->deleteWhere("follow_user=$uid AND follow_following={$following->getID()}");
 		
-		return $this->message('msg_unfollow', [$following->displayNameLabel()])->add(Website::redirectMessage(href('Follower', 'Following')));
+		return Website::redirectMessage('msg_unfollow', [$following->displayNameLabel()], href('Follower', 'Following'));
 	}
 	
 }

@@ -19,7 +19,7 @@ use GDO\Form\GDT_Validator;
  * Add a user to follow.
  * 
  * @author gizmore
- * @version 6.07
+ * @version 6.10
  * @since 6.07
  */
 final class Follow extends MethodForm
@@ -73,7 +73,7 @@ final class Follow extends MethodForm
 		$following = $form->getFormValue('follow_following');
 		
 		# Insert record
-		$follow = GDO_Follower::blank($form->getFormData())->
+		GDO_Follower::blank($form->getFormData())->
 			setVar('follow_user', $userid)->
 			insert();
 		
@@ -82,8 +82,7 @@ final class Follow extends MethodForm
 		
 		#
 		return
-			$this->message('msg_following', [$following->displayName()])->
-			add(Website::redirectMessage(url('Follower', 'Following')));
+			Website::redirectMessage('msg_following', [$following->displayName()], url('Follower', 'Following'));
 	}
 	
 }
