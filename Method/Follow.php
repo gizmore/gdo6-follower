@@ -40,9 +40,9 @@ final class Follow extends MethodForm
 		$form->addFields(array(
 			$follow->gdoColumn('follow_following'),
 			GDT_Validator::make()->validator('follow_following', [$this, 'validateFollowing']),
-			GDT_Submit::make(),
 			GDT_AntiCSRF::make(),
 		));
+		$form->actions()->addField(GDT_Submit::make());
 	}
 	
 	public function validateFollowing(GDT_Form $form, GDT_User $field, $value)
