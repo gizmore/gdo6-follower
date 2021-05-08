@@ -24,7 +24,7 @@ final class Unfollow extends MethodForm
 			GDT_Link::make('link_followers')->href(href('Follower', 'Followers'))->icon('list'),
 			GDT_Link::make('link_following')->href(href('Follower', 'Following'))->icon('list'),
 		));
-		return GDT_Response::makeWith($tabs)->add(parent::renderPage());
+		return GDT_Response::makeWith($tabs)->addField(parent::renderPage());
 	}
 	
 	public function createForm(GDT_Form $form)
